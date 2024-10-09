@@ -4,23 +4,25 @@ Ray.useDefaultSettings({
   remote_path: "webpack-internal:///(sc_server|sc_client|app-client)/.",
   local_path: process.env.LOCAL_PATH,
   sending_payload_callback: (instance, payloads) => {
-    switch (payloads[0].data.origin.file.match(/webpack-internal:\/\/\/(?<type>sc_server|sc_client|app-client)\/\./).groups.type) {
-      case "sc_server":
+    const match = payloads[0].data.origin.file.match(/webpack-internal:\/\/\/(?<type>rsc|ssr|sc_client|app-client)\/\./)
+		if (!match) return
+    switch (match.groups.type) {
+      case "ssr":
         payloads.push({ data: payloads[0].data, toArray: () => ({
           type: "label",
-          content: { label: "RSC" },
+          content: { label: "SSR" },
           origin: payloads[0].data.origin
         }) });
         payloads.push({ data: payloads[0].data, toArray: () => ({
           type: "color",
-          content: { color: "green" },
+          content: { label: 'Server', color: "green" },
           origin: payloads[0].data.origin
         }) });
         break;
       case "sc_client":
         payloads.push({ data: payloads[0].data, toArray: () => ({
           type: "label",
-          content: { label: "SSR" },
+          content: { label: "Browser" },
           origin: payloads[0].data.origin
         }) });
         payloads.push({ data: payloads[0].data, toArray: () => ({
