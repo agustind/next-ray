@@ -1,5 +1,7 @@
 # Next.js integration for Ray
 
+## This version fixes errors on nextjs > 14
+
 [![npm package][npm-img]][npm-url]
 [![Downloads][downloads-img]][downloads-url]
 [![Issues][issues-img]][issues-url]
